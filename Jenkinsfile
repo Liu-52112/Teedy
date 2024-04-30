@@ -41,7 +41,7 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-        
+
         stage('PMD') {
             steps {
                 sh 'mvn pmd:pmd'
@@ -65,6 +65,16 @@ pipeline {
             }
         }
 
+        stage('Generate Javadoc Artifact') {
+            steps {
+                sh 'mvn javadoc:jar'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                }
+            }
+        }
     }
 
     post {
