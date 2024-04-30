@@ -41,6 +41,17 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
+        
+        stage('PMD') {
+            steps {
+                sh 'mvn pmd:pmd'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: '**/target/site/pmd.html'
+                }
+            }
+        }
 
         stage('Test') {
             steps {
@@ -54,16 +65,6 @@ pipeline {
             }
         }
 
-        stage('PMD') {
-            steps {
-                sh 'mvn pmd:pmd'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: '**/target/site/pmd.html'
-                }
-            }
-        }
     }
 
     post {
