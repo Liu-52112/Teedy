@@ -50,7 +50,7 @@ pipeline {
 
         stage('DOC') {
             steps {
-                sh 'mvn javadoc:jar || True'
+                sh 'mvn javadoc:javadoc --failnever '
             }
             post {
                 success {
