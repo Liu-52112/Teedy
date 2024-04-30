@@ -46,23 +46,17 @@ pipeline {
             steps {
                 sh 'mvn pmd:pmd'
             }
-            post {
-                always {
-                    archiveArtifacts artifacts: '**/target/site/pmd.html'
-                }
+        }
+
+        stage('DOC') {
+            steps {
+                sh 'mvn javadoc:jar'
             }
         }
 
         stage('Test') {
             steps {
                 sh 'mvn test'
-                sh 'mvn javadoc:jar'
-            }
-            post {
-                always {
-                    surefire '**/target/surefire-reports/*.xml'
-                    javadoc javadocDir: 'target/site/apidocs', keepAll: false
-                }
             }
         }
     }
