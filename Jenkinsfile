@@ -58,11 +58,6 @@ pipeline {
             steps {
                 sh 'mvn test'
             }
-            post {
-                success {
-                    archiveArtifacts artifacts: '**/target/*-tests.jar', fingerprint: true
-                }
-            }
         }
     }
 
