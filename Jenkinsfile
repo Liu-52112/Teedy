@@ -52,11 +52,22 @@ pipeline {
             steps {
                 sh 'mvn javadoc:jar'
             }
+            post {
+                success {
+                    // 存储 javadoc jar 作为构建工件
+                    archiveArtifacts artifacts: '**/target/*-javadoc.jar', fingerprint: true
+                }
+            }
         }
 
         stage('Test') {
             steps {
                 sh 'mvn test'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: '**/target/*-tests.jar', fingerprint: true
+                }
             }
         }
     }
