@@ -52,12 +52,6 @@ pipeline {
             steps {
                 sh 'mvn javadoc:javadoc --fail-never '
             }
-            post {
-                success {
-                    // 存储 javadoc jar 作为构建工件
-                    archiveArtifacts artifacts: '**/target/*-javadoc.jar', fingerprint: true
-                }
-            }
         }
 
         stage('Test') {
