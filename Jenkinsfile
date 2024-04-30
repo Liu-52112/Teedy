@@ -56,6 +56,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'mvn test'
+                sh 'mvn javadoc:jar'
             }
             post {
                 always {
@@ -65,17 +66,6 @@ pipeline {
             }
         }
 
-        stage('Generate Javadoc Artifact') {
-            steps {
-                sh 'mvn javadoc:jar'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-                }
-            }
-        }
-    }
 
     post {
         always {
